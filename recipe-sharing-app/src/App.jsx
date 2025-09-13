@@ -1,24 +1,26 @@
-import FavoritesList from './components/FavoritesList';
-import RecommendationsList from './components/RecommendationsList';
-import { useRecipeStore } from './components/recipeStore';
+import React from "react";
+import Navbar from "./components/Navbar";
+import AddRecipeForm from "./components/AddRecipeForm";
+import RecipeList from "./components/RecipeList";
+import EditRecipeForm from "./components/EditRecipeForm";
+import SearchBar from "./components/SearchBar";
+import FavoritesList from "./components/FavoritesList";
+import RecommendationsList from "./components/RecommendationsList";
 
 function App() {
-  const generateRecommendations = useRecipeStore((state) => state.generateRecommendations);
-
   return (
     <div>
+      <Navbar />
       <h1>Recipe Sharing App</h1>
-      {/* Recipes list should already exist */}
-
+      <SearchBar />
+      <AddRecipeForm />
+      <RecipeList />
+      <EditRecipeForm />
       <FavoritesList />
-
-      <button onClick={generateRecommendations}>
-        Generate Recommendations
-      </button>
-
       <RecommendationsList />
     </div>
   );
 }
 
 export default App;
+
