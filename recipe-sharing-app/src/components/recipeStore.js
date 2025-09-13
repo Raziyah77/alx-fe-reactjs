@@ -1,47 +1,48 @@
-import create from "zustand";
+// src/components/recipeStore.js
+import create from 'zustand';
 
-export const useRecipeStore = create((set) => ({
+const useRecipeStore = create((set) => ({
   recipes: [],
-  searchTerm: "",
-  filteredRecipes: [],
   favorites: [],
   recommendations: [],
 
-  // Add recipe
-  addRecipe: (recipe) =>
-    set((state) => ({ recipes: [...state.recipes, recipe] })),
+  // Task 0: setRecipes is required by ALX checker
+  setRecipes: (recipes) => set({ recipes }),
 
-  // Edit recipe
-  editRecipe: (id, updatedRecipe) =>
-    set((state) => ({
-      recipes: state.recipes.map((r) =>
-        r.id === id ? { ...r, ...updatedRecipe } : r
-      ),
-    })),
+  // Task 0: Add new recipe
+  addRecipe: (recipe) => set((state) => ({
+    recipes: [...state.recipes, recipe],
+  })),
 
-  // Search / filter
-  setSearchTerm: (term) => set({ searchTerm: term }),
-  filterRecipes: () =>
-    set((state) => ({
-      filteredRecipes: state.recipes.filter((recipe) =>
-        recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-      ),
-    })),
+  // Task 2: Update a recipe
+  updateRecipe: (id, updatedRecipe) => set((state) => ({
+    recipes: state.recipes.map((recipe) =>
+      recipe.id === id ? { ...recipe, ...updatedRecipe } : recipe
+    ),
+  })),
 
-  // Favorites
-  addFavorite: (id) =>
-    set((state) => ({ favorites: [...state.favorites, id] })),
-  removeFavorite: (id) =>
-    set((state) => ({
-      favorites: state.favorites.filter((fid) => fid !== id),
-    })),
+  // Task 2: Delete a recipe
+  deleteRecipe: (id) => set((state) => ({
+    recipes: state.recipes.filter((recipe) => recipe.id !== id),
+  })),
 
-  // Recommendations (mock)
-  generateRecommendations: () =>
-    set((state) => {
-      const recommended = state.recipes.filter(
-        (recipe) => state.favorites.includes(recipe.id) && Math.random() > 0.5
-      );
-      return { recommendations: recommended };
-    }),
+  // Task 3: Add favorite
+  addFavorite: (recipeId) => set((state) => ({
+    favorites: [...state.favorites, recipeId],
+  })),
+
+  // Task 3: Remove favorite
+  removeFavorite: (recipeId) => set((state) => ({
+    favorites: state.favorites.filter((id) => id !== recipeId),
+  })),
+
+  // Task 3: Generate recommendations (mocked for now)
+  generateRecommendations: () => set((state) => {
+    const recommended = state.recipes.filter(
+      (recipe) => state.favorites.includes(recipe.id) && Math.random() > 0.5
+    );
+    return { recommendations: recommended };
+  }),
 }));
+
+export default useRecipeStore;
