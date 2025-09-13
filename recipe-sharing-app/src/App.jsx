@@ -1,26 +1,38 @@
-import React from "react";
-import Navbar from "./components/Navbar";
-import AddRecipeForm from "./components/AddRecipeForm";
-import RecipeList from "./components/RecipeList";
-import EditRecipeForm from "./components/EditRecipeForm";
-import SearchBar from "./components/SearchBar";
-import FavoritesList from "./components/FavoritesList";
-import RecommendationsList from "./components/RecommendationsList";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import AddRecipeForm from './components/AddRecipeForm';
+import RecipeList from './components/RecipeList';
+import EditRecipeForm from './components/EditRecipeForm';
+import RecipeDetails from './components/RecipeDetails';
+import DeleteRecipeButton from './components/DeleteRecipeButton';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
 
 function App() {
   return (
-    <div>
-      <Navbar />
-      <h1>Recipe Sharing App</h1>
-      <SearchBar />
-      <AddRecipeForm />
-      <RecipeList />
-      <EditRecipeForm />
-      <FavoritesList />
-      <RecommendationsList />
-    </div>
+    <Router>
+      <div>
+        <h1>Recipe Sharing Application</h1>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                <AddRecipeForm />
+                <RecipeList />
+              </div>
+            }
+          />
+          <Route path="/edit/:id" element={<EditRecipeForm />} />
+          <Route path="/recipe/:id" element={<RecipeDetails />} />
+          <Route path="/delete/:id" element={<DeleteRecipeButton />} />
+          <Route path="/favorites" element={<FavoritesList />} />
+          <Route path="/recommendations" element={<RecommendationsList />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
 export default App;
-
