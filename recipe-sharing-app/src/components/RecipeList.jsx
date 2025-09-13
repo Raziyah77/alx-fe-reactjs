@@ -1,22 +1,37 @@
+// src/components/RecipeList.jsx
 import React from "react";
-import { useRecipeStore } from "./recipeStore";
+import { Link } from "react-router-dom"; // ✅ required import
+import useRecipeStore from "./recipeStore";
+import DeleteRecipeButton from "./DeleteRecipeButton";
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
-  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
+  const { recipes, deleteRecipe, searchTerm } = useRecipeStore((state) => ({
+    recipes: state.recipes,
+    deleteRecipe: state.deleteRecipe,
+    searchTerm: state.searchTerm,
+  }));
 
-  const displayRecipes =
-    filteredRecipes.length > 0 ? filteredRecipes : recipes;
+  // 🔎 filter recipes based on search term
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div id="list">
-      <h2>Recipe List</h2>
-      {displayRecipes.map((recipe) => (
-        <div key={recipe.id}>
-          <h3>{recipe.title}</h3>
-          <p>{recipe.description}</p>
-        </div>
-      ))}
+    <div>
+      <h2>Recipes</h2>
+      {filteredRecipes.length === 0 ? (
+        <p>No recipes found.</p>
+      ) : (
+        <ul>
+          {filteredRecipes.map((recipe) => (
+            <li key={recipe.id}>
+              {/* ✅ wrap recipe title in a Link */}
+              <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
+              <DeleteRecipeButton id={recipe.id} />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
