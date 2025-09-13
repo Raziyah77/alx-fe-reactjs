@@ -1,30 +1,23 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import RecipeList from './components/RecipeList';
-import AddRecipeForm from './components/AddRecipeForm';
-import RecipeDetails from './components/RecipeDetails';
-import SearchBar from './components/SearchBar';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
+import { useRecipeStore } from './components/recipeStore';
 
 function App() {
+  const generateRecommendations = useRecipeStore((state) => state.generateRecommendations);
+
   return (
-    <Router>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/add">Add Recipe</Link>
-      </nav>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <SearchBar />
-              <RecipeList />
-            </>
-          }
-        />
-        <Route path="/add" element={<AddRecipeForm />} />
-        <Route path="/recipes/:id" element={<RecipeDetails />} />
-      </Routes>
-    </Router>
+    <div>
+      <h1>Recipe Sharing App</h1>
+      {/* Recipes list should already exist */}
+
+      <FavoritesList />
+
+      <button onClick={generateRecommendations}>
+        Generate Recommendations
+      </button>
+
+      <RecommendationsList />
+    </div>
   );
 }
 
