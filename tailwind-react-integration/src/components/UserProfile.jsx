@@ -2,8 +2,8 @@ import React from "react";
 
 export default function UserProfile() {
   return (
-    <div className="max-w-sm mx-auto bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out">
-      <div className="p-6 text-center">
+    <div className="max-w-sm mx-auto bg-gray-100 p-8 sm:p-4 md:p-8 my-20 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+      <div className="text-center">
         {/* Profile Image with hover scaling */}
         <img
           className="w-32 h-32 rounded-full mx-auto mb-4 transform transition-transform duration-300 ease-in-out hover:scale-110"
