@@ -1,28 +1,36 @@
 import { useState } from "react";
 
-const RegistrationForm = () => {
+function RegistrationForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let formErrors = {};
 
-    if (!username || !email || !password) {
-      alert("All fields are required!");
-      return;
+    // ✅ Basic validation logic
+    if (!email) {
+      formErrors.email = "Email is required";
     }
 
-    console.log("User Registered:", { username, email, password });
-    alert("Registration successful!");
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    if (!password) {
+      formErrors.password = "Password is required";
+    }
+
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+    } else {
+      // Normally you’d handle submission here
+      console.log("Form submitted:", { username, email, password });
+      setErrors({});
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px", width: "250px" }}>
-      <h3>Controlled Registration Form</h3>
+    <form onSubmit={handleSubmit}>
+      <h3>Simple Registration Form</h3>
 
       <input
         type="text"
@@ -30,6 +38,7 @@ const RegistrationForm = () => {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
+      {errors.username && <p>{errors.username}</p>}
 
       <input
         type="email"
@@ -37,6 +46,7 @@ const RegistrationForm = () => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+      {errors.email && <p>{errors.email}</p>}
 
       <input
         type="password"
@@ -44,10 +54,11 @@ const RegistrationForm = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      {errors.password && <p>{errors.password}</p>}
 
       <button type="submit">Register</button>
     </form>
   );
-};
+}
 
 export default RegistrationForm;
