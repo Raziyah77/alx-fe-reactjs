@@ -10,7 +10,11 @@ function RegistrationForm() {
     e.preventDefault();
     let formErrors = {};
 
-    // ✅ Basic validation logic
+    // ✅ Basic validation logic for all fields
+    if (!username) {
+      formErrors.username = "Username is required";
+    }
+
     if (!email) {
       formErrors.email = "Email is required";
     }
@@ -22,15 +26,14 @@ function RegistrationForm() {
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
-      // Normally you’d handle submission here
-      console.log("Form submitted:", { username, email, password });
       setErrors({});
+      console.log("Form submitted:", { username, email, password });
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>Simple Registration Form</h3>
+      <h3>Controlled Registration Form</h3>
 
       <input
         type="text"
